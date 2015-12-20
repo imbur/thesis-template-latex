@@ -1,0 +1,6 @@
+pattern catchProblemFinder_flattened_normalized(cBlock : Handler, insOf : InstanceOf){
+	Identifier(varRef);
+	Unary.operand(insOf, varRef);
+	Handler.parameter(cBlock, param);
+	Identifier.refersTo(varRef, param);
+}

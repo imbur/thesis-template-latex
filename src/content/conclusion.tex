@@ -1,0 +1,55 @@
+%----------------------------------------------------------------------------
+\chapter{Conclusion and future work}
+%----------------------------------------------------------------------------
+\label{chap:conclusion}
+
+%Összesen ~3 oldal
+
+
+%----------------------------------------------------------------------------
+\section{Conclusions}
+%----------------------------------------------------------------------------
+
+%In our work we introduced the basics of graph pattern matching along with the motivation for solving such problems. 
+
+We implemented and integrated to the \eiq framework a model adaptive search plan calculation algorithm for local search-based pattern matching. We also provided two search execution runtimes, a single-threaded and a simple parallel runtime. 
+
+The implementation was tested for performance and scalability, and was compared to an already existing, incremental pattern matching algorithm from the aspect of execution time. This evaluation, and comparison was done for models coming from two different domains. First part of the measurements were done on source code models with patterns describing program code smells. Additionally, we used the Train Benchmark to assess the usability of the proposed solution. The results proved that in scenarios, in which patterns are only matched against a model.
+
+We also provided tooling support for the local search algorithm with a Local Search Debugger component, which can help programmers find problems with the pattern definitions, and provide help in finding time consuming operations in the pattern matching process.
+
+%----------------------------------------------------------------------------
+\section{Summary of contributions}
+%----------------------------------------------------------------------------
+
+I successfully adapted a local search-based pattern matching algorithm, which involves a model sensitive local search planner implementation, and two executor runtimes. During the implementation solved several design issues and integrated the result to the open-source \eiq project. I provided support for debugging the local search execution by the Local Search Debugger View. 
+
+I assessed the performance and scalability of the solutions, and via the evaluation I showed that the local search-based algorithm provides a scalable solution for pattern matching even over large models. The measurements also shed light on a shortcoming of the current implementation of the \eiq Base Indexer.
+
+
+
+%----------------------------------------------------------------------------
+\section{Future plans}
+%----------------------------------------------------------------------------
+
+The ultimate goal of the \eiq graph pattern matching framework is to successfully, and efficiently find matches of a pattern over a given model. To improve execution times of the local search based approaches, there are several improvement possibilities.
+
+\subsection{Information about type cardinality}
+It was covered in \autoref{sec:performance-evaluation} that the current implementation of the base indexer is suboptimal. In addition to optimizing the current implementation, the performance can be improved by providing an option to only maintain type cardinalities. This could return the required information with minimal overhead in execution time. It would also take up less memory than the current implementation of the base index, for it would not keep track of the model elements themselves, only just the number of instances of the types. This information is sufficient in most cases, when inverse navigation along links is not a requirement.
+
+\subsection{Adaptive cost calculation}
+The search operation costs are calculated based on the instance model properties, type of the corresponding constraint, and the types of operations, which can be extend or check. This, however, is still an estimation for the time needed to execute the operation. For this reason, this information may mislead the local search planner, when an expensive operation is declared to be cheap by the cost function. 
+
+The times needed for operations to execute can be collected runtime. We suppose that by analyzing the historical data about the execution times can significantly help search operation cost estimation by assigning different kinds of bias to search operations that take a long time to finish.
+
+
+\subsection{Advanced parallel execution}
+%TODO work stealing
+
+As it was emphasized in \autoref{sec:advantages-weaknesses}, the current parallel pattern matching execution runtime relies on a basic concept, and may not result in significant speedup. The evaluations show that on practical models, in our case obtained from software source code, this approach does not seem to be successful. In case of artificial models, a tendency was discovered that for larger sizes the parallel outperforms the sequential implementation, but the execution times are far below the theoretic possible speedup.
+
+In order to approach the desired execution time introduced also in \autoref{sec:advantages-weaknesses}, \emph{work stealing} should be applied. This would mean that at any point of the search plan, the matching process could be forked by several sequential executors. In an ideal case, this would happen in an on-demand way during search execution: if an executor seems to have significantly more work at a given extend operation, while other executors have finished their part, the work could be redistributed, thus the computational resources of the platform could be harnessed again.
+
+\subsection{Hybrid pattern matching}
+
+In the \eiq framework there are two available graph pattern matching strategies for the users, and both approaches has their own advantages and drawbacks. It would be beneficial, to allow their combination in order to profit from their advantages. To accomplish this, we see the following options. (i) Local search based pattern matcher may call incremental pattern matchers for calculating matches of calls. (ii) In case of a Rete matcher, the production representing a called pattern can be provided by the result set of a local search-based matcher.

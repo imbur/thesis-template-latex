@@ -1,0 +1,62 @@
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\selecthungarian
+
+%----------------------------------------------------------------------------
+% Abstract in Hungarian
+%----------------------------------------------------------------------------
+\chapter*{Kivonat}\addcontentsline{toc}{chapter}{Kivonat}
+%
+%Komplex rendszerek fejlesztésénél a hagyományos mérnöki megközelítések helyett inkább modellvezérelt paradigmákra támaszkodnak. Ezen megközelítés egyik nagy előnye, hogy lehetőséget ad a kezdeti feladat részfeladatokra bontására, melyek önmagukban már kezelhető bonyolultságúak. Másik pozitívum, hogy a fejlesztési folyamat korai szakaszaiban már a fejlett analízis módszerek segítségével észlelhetők, és a későbbi fejlesztési szakaszokhoz képest könnyebben és olcsóbban javíthatók a problémák. 
+%
+
+%A gráf-szerű felépítéssel rendelkező modellek esetén gyakran választott tömör és kényelmes formalizmus a modell minták.
+
+%az egyes műveletek során. 
+
+%közben gyakoran kerül sor modellek transzformációjára, jólformáltsági kényszerek ellenőrzése, vagy keresésre a modellben. Az említett műveletekben a közös, hogy szükség van egyfajta szabályok, vagy másnéven feltételek megadására, amelyek teljesülése esetén valami tevékenységet kell végrahajtani. Ezen szabályok megfogalmazására sokszor alkalmazott formalizmus a gráfminták, illetve ezekben az esetekben a kiértékelésük gráfmintaillesztéssel történik.
+
+%Szoftvermodellezési feladatok közben gyakoran kerül sor modellek transzformációjára, jólformáltsági kényszerek ellenőrzése, vagy keresésre a modellben. Az említett műveletekben a közös, hogy szükség van egyfajta szabályok, vagy másnéven feltételek megadására, amelyek teljesülése esetén valami tevékenységet kell végrahajtani. Ezen szabályok megfogalmazására sokszor alkalmazott formalizmus a gráfminták, illetve ezekben az esetekben a kiértékelésük gráfmintaillesztéssel történik.
+
+%Az ezekhez kapcsolódó jelenlegi algoritmusok hatékonysága és használhatósága azonban erősen környezetfüggő. 
+
+% Az \eiq gráfmintaillesztő keretrendszer egy inkrementális algoritmust kínált eddig a felhasználók számára a probléma megoldására, emellett számos eszköztámogatást is biztosított gráfminták definiálására és adott modellekben történő megkeresésére.
+
+Szoftvermodellezési feladatok során a modellek, amiket jellemzően gráfként reprezentálnak, tartalmazzák a tervezési információkat. Ezek feldolgozásával használjuk ki ennek a megjelenítési formának az előnyeit, és hasznosítjuk az ismereteket. A modelleken végzett műveletek egyik célja hagyományosan a végrehajtható programkód előállítása.
+
+Modelleken végzett tipikus műveletek egyike a keresés, mely során a cél bizonyos feltételnek megfelelő elemek, azaz egy almodell felderítése. Ez részfeladata a transzformációnak, ami vagy egy köztes modellt, vagy forráskódot állít elő a bemeneti modell alapján. Szintén a keresésen alapul a jólformáltság ellenőrzése, ami vizsgálja, hogy a modell felépítése követi-e a modellezési nyelv szabályait. 
+
+Dolgozatomban az almodellek keresését gráfmintaillesztést segítségével végeztem. A gráfmintaillesztés általánosan egy komplex problémakör, azonban különböző megközelítések már ismertek a megoldására. Egyik gyakori módszer a lokális keresésen alapuló mintaillesztési technika, mely egy kezdeti pontból kiindulva keresi meg az illeszkedéseket. A módszer hatékonyan működik optimális keresési terv mellett, azonban az optimális keresési tervet csakis az éppen vizsgált modell struktúrája határozza meg.
+
+Munkám során adaptáltam és implementáltam egy lokális keresésen alapuló gráfmintaillesztési algoritmuscsaládot. A megvalósított módszer lényege, hogy a modell számossági jellemzői alapján számítja ki a keresési tervet. Emellett elkészítettem a keresés egy egyszálú, valamint egy párhuzamos verzióját is. A dolgozatban bemutatom az algoritmus főbb gondolatait és lépéseit, illetve a megvalósítás sajátosságait. A megoldást a nyílt forráskódú \eiq keretrendszerbe is integráltam, törekedve a komponensek újrafelhasználására.
+
+Mindkét típusú megvalósítás teljesítményét és skálázhatóságát mérésekkel is alátámasztom, és egymással, illetve a korábban már meglévő inkrementális algoritmus végrehajtási idejével is összehasonlítom. Emellett elemzem, hogy mely gráfmintaillesztési forgatókönyvek mellett melyik módszer bizonyul kedvezőbbnek. Az erdemények szerint az alkalmankénti futtatást igénylő, illetve a memóriaszegény környezetben végzett feladatok során is a lokális keresésen alapuló algoritmus részesítendő előnyben.
+
+\vfill
+\selectenglish
+
+
+%----------------------------------------------------------------------------
+% Abstract in English
+%----------------------------------------------------------------------------
+\chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}
+
+Model-driven software development tasks involve creation of graph-like models, which store facts and parameters about the system under design. Developers make use of this representation when processing the models, and apply the contained information. The ultimate goal of the development process it to produce executable code, which may be preceded by several intermediate steps.
+
+A frequent operation executed on a models can be search, which means an exploration of elements, in other words a submodel, that comply with a set of constraints. Other typical operations include search as a subtask, such as transformation, which derives a new representation of the model, or generates executable source code. Well-formedness validation also based on search, for it checks whether the model is valid in terms of the rules of the modeling language. 
+
+In this thesis I applied graph pattern matching as the underlying technique to find submodels. Generally, graph pattern matching is a complex problem, however, different approaches are commonly used to solve it. One of them is the local search-based pattern matching that finds all matches by starting the search from specified model elements. If the search plan is optimal, this technique is highly efficient. However, this is determined only by the structure of the model on which the search is performed.
+
+During my work I adapted and implemented a local search-based pattern matching algorithm, which uses the statistics of the underlying model to calculate the search plan. I created two versions of search execution runtimes: a single-threaded, and a parallel. In this thesis I introduce the main ideas and key steps of the algorithm, as well as the peculiarity of the implementation. I also integrated the completed software components to the open-source \eiq framework.
+
+I provide assessment results in order to show the scalability of the proposed solution. For this purpose I carried out performance comparison for both pattern matching runtimes. Additionally I evaluated the solution with respect to the already existing, incremental pattern matcher algorithm of \eiq. Finally, the applicability of the algorithm is discussed in case of different pattern matching scenarios. According to the results, the local search-based pattern matching technique is preferable in cases when tasks require only a single run, or the environment is memory constrained. 
+
+
+\vfill
+\selectthesislanguage
+\clearpage\null\newpage
+
+\newcounter{romanPage}
+\setcounter{romanPage}{\value{page}}
+\stepcounter{romanPage}

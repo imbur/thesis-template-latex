@@ -1,0 +1,224 @@
+% pattern colors
+\definecolor{negcolor}{RGB}{223,49,35}
+\definecolor{newcolor}{RGB}{43,183,47}
+\definecolor{delcolor}{RGB}{59,66,161}
+
+% listing colors
+\definecolor{backgroundcolor}{HTML}{F5F5F5}
+\definecolor{keywordcolor}{HTML}{295F94}
+\definecolor{commentcolor}{HTML}{AD95AF}
+\definecolor{stringcolor}{HTML}{317ECC}
+
+\newcommand{\union}{\cup}
+\newcommand{\intersection}{\cap}
+\newcommand{\parentheses}[1]{\left(#1\right)}
+\newcommand{\op}[2]{\mathrm{#1}\parentheses{#2}}
+\newcommand{\naturaljoin}{\bowtie}
+\newcommand{\antijoin}{\, \triangleright \,}
+\newcommand{\iq}{\mbox{\textsc{IncQuery}}\xspace}
+\newcommand{\iqpl}{\mbox{\textsc{IncQuery}} Pattern Language\xspace}
+\newcommand{\iqd}{\mbox{\textsc{IncQuery-D}}\xspace}
+\newcommand{\eiq}{\mbox{\textsc{EMF-IncQuery}}\xspace}
+\newcommand{\emfapi}{\mbox{EMF API}\xspace}
+\newcommand{\tb}{Train Benchmark\xspace}
+\renewcommand{\ie}{i.e.,\@\xspace}
+\renewcommand{\Ie}{I.e.,\@\xspace}
+\renewcommand{\eg}{e.g.,\@\xspace}
+\renewcommand{\Eg}{E.g.,\@\xspace}
+\renewcommand{\etal}{et al.\@\xspace}
+\renewcommand{\etc}{etc.\@\xspace}
+
+% scenarios
+\newcommand{\scenario}[1]{\textsf{#1}\xspace}
+\newcommand{\batch}{\scenario{Batch}}
+\newcommand{\inject}{\scenario{Inject}}
+\newcommand{\repair}{\scenario{Repair}}
+
+% phases 
+\newcommand{\phase}[1]{\textsf{#1}\xspace}
+\renewcommand{\read}{\phase{read}}
+\renewcommand{\check}{\phase{check}}
+\newcommand{\transformation}{\phase{transformation}}
+\newcommand{\recheck}{\phase{recheck}}
+
+\newcommand{\readandcheck}{\phase{\read and \check}}
+\newcommand{\transformationandrecheck}{\phase{\transformation and \recheck}}
+% queries
+\newcommand{\query}[1]{\textsf{#1}\xspace}
+\newcommand{\connectedsegments}{\query{Connected\-Segments}}
+\newcommand{\poslength}{\query{PosLength}}
+\newcommand{\routesensor}{\query{Route\-Sensor}}
+\newcommand{\semaphoreneighbor}{\query{Semaphore\-Neighbor}}
+\newcommand{\switchsensor}{\query{Switch\-Sensor}}
+\newcommand{\switchset}{\query{SwitchSet}}
+
+% table headers
+\newcommand*{\theadswfirst}[1]{\multicolumn{1}{|c|}{\bfseries \begin{sideways}#1\end{sideways}}}
+\newcommand*{\theadsw}[1]{\multicolumn{1}{c|}{\bfseries \begin{sideways}#1\end{sideways}}}
+\newcommand*{\theadfirst}[1]{\multicolumn{1}{|c|}{\bfseries #1}}
+\newcommand*{\thead}[1]{\multicolumn{1}{c|}{\bfseries #1}}
+
+% for the hyperref package
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
+
+\newcommand{\patternscale}{0.23}
+\newcommand{\yedscale}{0.50}
+\newcommand{\ecorescale}{0.50}
+
+\newcommand{\yes}{$\CIRCLE$\xspace}
+\newcommand{\somewhat}{$\LEFTcircle$\xspace}
+\newcommand{\no}{$\Circle$\xspace}
+
+\newcommand{\forallqueries}[1]{\foreach \q in {ConnectedSegments,PosLength,RouteSensor,SemaphoreNeighbor,SwitchSensor,SwitchSet}{#1}}
+
+\newcommand{\benchmarkresult}[3]{
+\begin{figure*}[p]
+	\centering
+	\includegraphics[width=\textwidth]{benchmark-results/#1-#2}
+	\caption{#3.}
+	\label{fig:#1-#2}
+\end{figure*}}
+
+\newcommand{\patterngraphics}[1]{
+	\centering
+	\includegraphics[scale=\patternscale]{pattern-#1}
+ 	\caption{The \textsf{#1} pattern.}
+ 	\label{fig:pattern-#1}
+}
+
+\newcommand{\tbpattern}[1]{
+\begin{figure}[H]
+	\patterngraphics{#1}
+\end{figure}}
+
+\newcommand{\yedfigure}[2]{
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=\yedscale]{yed/#1}
+	\caption{#2.}
+	\label{fig:#1}
+\end{figure}}
+
+\newcommand{\yedfigurelarge}[2]{
+\begin{figure*}[htbp]
+	\centering
+	\includegraphics[scale=\yedscale]{yed/#1}
+	\caption{#2.}
+	\label{fig:#1}
+\end{figure*}}
+
+\newcommand{\tbtransformation}[2]{
+\begin{figure}[H] 
+	\centering
+	\includegraphics[scale=\patternscale]{transformation-#1-#2}
+ 	\caption{The \textsf{#1} transformation for \textsf{#2}.}
+ 	\label{fig:transformation-#1-#2}
+\end{figure}}
+
+\lstset{
+	numbers=left,
+	numberstyle=\scriptsize\ttfamily,
+	stepnumber=1,
+	numbersep=5pt,
+	%
+	basicstyle=\scriptsize\ttfamily,
+	backgroundcolor=\color{backgroundcolor},
+	keywordstyle=\color{keywordcolor}\bfseries,
+	commentstyle=\color{commentcolor},
+	stringstyle=\color{stringcolor},
+	identifierstyle=, % nothing happens
+	%
+	showstringspaces=false, % no special string spaces
+	aboveskip=3pt,
+	belowskip=3pt,
+	columns=flexible,
+	keepspaces=true,
+	breaklines=true,	
+	frameround=tttt,
+	captionpos=b,
+	tabsize=2,
+	frame=tb,
+	framerule=0pt,
+	framexleftmargin=0.25em,
+}
+
+% languages
+
+\lstdefinelanguage{iqpl}
+{
+	morekeywords={@QueryBasedFeature,@Constraint,count,pattern,package,neg,find,import,true,false,or,check,job,action,state,severity,location,message,oclIsKindOf,self,exists,includes,invariant,class},
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]{"},
+}
+
+\lstdefinelanguage{xtend}{
+	morekeywords={class,for,def,val,var,cached,case,default,extension,false,import,JAVA,WORKFLOWSLOT,let,new,null,public,protected,private,create,switch,this,true,reexport,around,if,then,else,context,DEFAULT_NO_UPDATE_AND_DISAPPEAR,DEFAULT,APPEARED,DISAPPEARED,UPDATED,processor},
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]",
+	mathescape=true,
+}
+
+\lstdefinelanguage{sparql}{
+	morekeywords={SELECT, DISTINCT, WHERE, OPTIONAL, FILTER, NOT, EXISTS, sameTerm, bound},
+}
+
+% listings
+
+\newcommand{\listingiqpl}[2]
+{
+	\lstset{
+		language=iqpl
+	}
+	\lstinputlisting[label=lst:#1, caption=#2.]{code/#1.eiq}
+}
+
+\newcommand{\listingjava}[2]{
+	\lstset{
+		language=Java
+	}
+	\lstinputlisting[label=lst:#1, caption=#2.]{code/#1.java}
+}
+
+\newcommand{\listingsparql}[2]{
+	\lstset{
+		language=sparql
+	}
+	\lstinputlisting[label=lst:query-#1, caption=#2.]{queries/#1.sparql}
+}
+
+\lstdefinelanguage{turtle}
+{
+	morekeywords={@prefix,@base,@forSome,@forAll,@keywords},
+	morecomment=[l]{\#\ },
+	morestring=[b]\"
+}
+
+
+\lstdefinelanguage{XML}
+{
+	morestring=[b]",
+	morecomment=[s]{?}{?},
+	morecomment=[s]{!--}{--},
+	morekeywords={xmlns,version,xsi,xmi,graphml,graph},
+}
+
+\newcommand{\catchproblem}{\texttt{catchProblemFinder}\xspace}
+\newcommand{\handlervar}{\texttt{handlerVariable}\xspace}
+\newcommand{\baseindex}{\mbox{EMF-IncQuery} Base Index\xspace}
+\newcommand{\screenshotscale}{0.74}
+\newcommand{\stackedlines}[2]{\begin{tabular}{@{}c@{}}#1 \\ #2\end{tabular}}
+\newcommand{\eobject}{\texttt{EObject}\xspace}
+
+\newcommand{\todo}[1]{\textcolor{red}{\LARGE{TODO: #1}}\xspace}%
+\newcommand{\Modeldriven}{Model-driven\xspace}
+\newcommand{\modeldriven}{model-driven\xspace}
+\newcommand{\matlab}{\textsc{Matlab}\xspace}
+\newcommand{\simulink}{\textsc{Simulink}\xspace}
+\newcommand{\matlabsimulink}{\textsc{Matlab-Simulink}\xspace}
+
+\newcommand{\functionCall}[1]{\kern-0.25em(#1)}

@@ -1,0 +1,107 @@
+%\clearpage\null\newpage
+
+%----------------------------------------------------------------------------
+\chapter{\bevezeto}%\addcontentsline{toc}{chapter}{\bevezeto}
+%----------------------------------------------------------------------------
+
+
+%Összesen 2-3 oldal
+
+%What is the problem?
+%Why is it interesting and important?
+%Why is it hard? (E.g., why do naive approaches fail?)
+%Why hasn't it been solved before? (Or, what's wrong with previous proposed solutions? How does mine differ?)
+%What are the key components of my approach and results? Also include any specific limitations.
+
+%----------------------------------------------------------------------------
+\section{\Modeldriven engineering}
+%----------------------------------------------------------------------------
+
+
+
+The \emph{model-driven engineering} (MDE) approach is becoming widespread in many areas of software and system engineering, such as designing safety-critical systems, where faults can cause severe injuries or serious environmental harm, as it delivers higher-quality products in a shorter development lifecycle (see \eg~\cite{DBLP:journals/scp/HutchinsonWR14}). MDE aims to focus on creating and analyzing models at different levels of abstraction during the engineering process, which are used to synthesize executable program code in the end.
+
+Modeling may start as early as the \emph{requirements} against the system under design are collected. It is followed by creating high-level abstract models, then producing lower-level design artifacts with design decisions and implementation details after a series of refining steps. The models can be continuously verified during the development process in order to identify design faults as soon as possible.
+
+%
+%The concept of models in MDE is vague in the sense that it may even involve differential equations or spatial configurations in certain domains of system engineering. However, models involved in software engineering are essentially labeled graphs, and are typically sparse (i.e. the number of edges is roughly linearly proportional to the number of vertices). The labels applicable for vertices and edges of a modeling language (including types and attributes), along with their rules of interconnection, are defined by the \emph{metamodel} of the language. Note that only the abstract, formal structure of the model (the so-called \emph{abstract syntax}) is characterized here as graph-like; while the user-friendly visual depiction of the model (\emph{concrete syntax}) can independently be of diagram, text, or any other form. 
+
+There are some extensible formalisms intended as a general purpose way of representing models (such as UML~\cite{UML:Spec}), the industrial practice seems to prefer \emph{domain-specific languages}~(DSL) for describing models instead, which can be designed and modified to the needs of application domains and actual design processes. 
+
+On the other hand, developing such a DSL (and providing tool support) is a costly task requiring special skills. For this reason \emph{domain-specific modeling}~(DSM) technologies have emerged to support these purposes. The \emph{Eclipse Modeling Framework} (EMF,~\cite{EMFAPI}), which is built on the Eclipse platform, is a leading technology in this sense, which is considered a de facto industrial standard. A DSL development process with EMF starts with the definition of a metamodel, from which several components of the modeling tool can be automatically derived. It is defined using the \emph{ECore} formalism, which is defined as part of the EMF. Numerous generative and generic technologies assist the creation of tool support (such as textual and graphical editors) for EMF-based DSLs. The user can define textual or graphical concrete syntax, while code generators can be created by specifying source code templates for the modeling language. 
+
+
+
+
+
+%contex
+%
+%Modeling tools became widespread among engineers recently. They give a concise formalism to design complex systems. Models also provide early analysis opportunities, thus many properties of the system under design can be evaluated before the implementation. 
+%%Furthermore, there are many well-known analysis techniques for models that can discover errors in the design at very early stages of the development process. 
+%\matlabsimulink is an example of such modeling tools, and Architecture Analysis and Design Language as an example of modeling languages.
+%
+%\matlab was released in 1984, and was originally an environment for programming, and mathematical computation. Since 1992, \matlab has a component called \simulink, which provides tooling for modeling dynamic systems. \simulink can also generate deployable program code from the model. Nowadays it has become a de facto standard for mathematical computation and modeling.
+%
+%The relevance of modeling languages can be demonstrated by the \emph{Architecture Analysis and Design Language (AADL)}~\cite{AADL}. It is an international industrial standard of a modeling language for safety-critical embedded systems since 2004. It is used for software system specification, analysis, automated integration and code generation. One of the main advantages of the language is the strictly specified meaning of the elements, for it helps to avoid misunderstanding between the users of the created models. It has many application areas, involving avionics, aerospace and nuclear industries. 
+%
+%Modeling tools of today provide two main features in general: (i) tools to define a domain-specific language (DSL) with concepts of the domain, as well as relations between them, and (ii) operations that can be executed on the instance models. 
+%
+%\emph{Unified Modeling Language (UML)} is widely used for defining DSLs. UML, in most cases, is used for software design development, and to provide visual plans for the structure of the software, as well as to describe its behavior. The \emph{Eclipse Modeling Framework (EMF)} has its own language for a similar purpose, it is called \emph{Ecore}. Both UML and ECore follow the specification of the \emph{Meta Object Facility (MOF)} standard for modeling. 
+
+
+%Operations on the models are typically \emph{transformation}, \emph{modification}, \emph{filtering of elements}, and \emph{search within the model}. All of these require a rule or rules as input. For software models have a graph like presentation, an easy way of formulating the rules is using graph patterns. The task is to find all matches of a pattern, then execute an action. For example, in case of model validation, a patterns can describe errors. In this application the desired action for each match is error indication towards the user.
+
+
+%----------------------------------------------------------------------------
+\section{Main challenges}
+%----------------------------------------------------------------------------
+
+Model processing can be categorized into the following type of operations: \emph{modification}, \emph{transformation}, \emph{filtering of elements}, and \emph{search within the model}. All of these require a definition of an application condition. When this condition is fulfilled, corresponding actions should be executed. As software models have graph like presentation, a way of formulating the conditions for model elements is using graph patterns,
+where the task is to find all matches of a pattern in the underlying model, and execute the required operations on these matches.
+%. In this case the task is to find all matches of a pattern, then carry out an action for every match.
+
+
+
+However, the problem of graph pattern matching is strongly related to graph isomorphism, which is a complex computational task, especially when carried out on large graphs. There are tools that rely on search-based approach to find all matches of a given pattern in a model, while others are using incremental techniques to collect and constantly maintain the set of pattern matches.
+
+There is a \emph{trade-off between the computation speed and the size of the used operative memory}. The search based algorithms usually execute faster when the pattern matching needs to run once. However, when a pattern needs to be matched multiple times against slightly changing models, incremental solutions can easily outperform the search-based algorithms. 
+
+The incremental algorithm achieves incremental behavior by maintaining predefined indexes based on the structure of the underlying model. When this index structure builds up, the set of matches are directly available. Additionally, model changes are propagated in the index structure efficiently, and the set of matches is updated immediately. However, this approach may be constrained by memory limits, because the supplementary data structure can take up huge amount of memory, based on the complexity of the pattern and the model.
+
+%The basis of an incremental algorithm is a supplementary data structure built in memory. This is then maintained when changing the model in a period of time that is \emph{proportional to the size of the change}. This means if the model is unchanged, the matches can be returned immediately after the first execution. In most cases the bottleneck of this approach is memory consumption. Large models with millions of elements and connections take up huge amount of memory, so that the supplementary objects required for the algorithm cannot be created.
+
+On the other hand, local search-based algorithms collect the matches by \emph{traversing the model}, starting from given points, and gathering each tuple of elements that satisfy all constraints of the pattern. The main challenge here is to select the starting points and to determine the \emph{optimal search plan} that guides the traversal. 
+
+% On the other hand, when using search-based algorithms, the search space of the pattern matcher can be extreme. One of the main tasks of the \emph{local search-based} approach is to calculate a \emph{search plan} in advance. This search plan determines the order of variable substitutions for the pattern variables when executing the search. In this sense plans yielding small search space are considered good. 
+% Then, during the matching process, the executor looks for substitutions, and checks whether the constraints declared in the pattern still hold. 
+
+% The main challenge is to calculate an adequate search plan that yields a search space that is small enough to traverse, and to find all the matches of the pattern. In addition, it is a typical scenario that many variables have multiple potential substitutions. It is also beneficial to parallelize the substitution process.
+
+%----------------------------------------------------------------------------
+\section{Summary of contributions and structure of the thesis}
+%----------------------------------------------------------------------------
+
+%Algorithm adaptation
+%Evaluation, measurements
+%Bibliography summary, already published related work
+
+Throughout my thesis, I use the pronoun "we" to refer to my supervisors and me. There are some publications that I coauthored, and used while writing this thesis. In the following there is an explicit enumeration of my own contributions to the topic:
+
+\begin{itemize}
+	\item I adapted and implemented a local search-based pattern matching algorithm,
+	\item I provided both single-threaded and parallel execution runtimes for executing search operations,
+	\item I created a debugger tooling to support pattern development and optimization,
+	\item I integrated the solution to the \eiq official Eclipse project, and
+	\item I evaluated the implementation from the aspect of performance.
+\end{itemize}
+
+
+The rest of the thesis is structured as follows: the basic background information about \modeldriven engineering (MDE) and the connecting technologies is introduced in \autoref{chap:preliminaries}. We introduce a motivating example for the application of MDE that is used throughout this thesis, then the relevant tools and frameworks used for our work are introduced. 
+
+\autoref{chap:overview} provides an overview of the proposed pattern matching framework. First, available research results and papers are referenced, highlighting their main ideas and achievements. It is followed by the discussion of algorithm integration aspects, and the key steps of our solution for local search-based pattern matching.
+
+\autoref{chap:integration} describes the integration and implementation tasks, which includes detailed description of the algorithm, execution methods, and the accompanying tooling. 
+
+The performance, and scalability of the implemented framework is evaluated in \autoref{chap:evaluation} on both industrial and artifical models.  
+
+\autoref{chap:conclusion} concludes the thesis with a short summary of the completed work, and an enumeration of possible future development directions

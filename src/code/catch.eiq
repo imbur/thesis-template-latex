@@ -1,0 +1,10 @@
+pattern catchProblemFinder(cBlock : Handler, insOf : InstanceOf){
+	Identifier(varRef);
+	Unary.operand(insOf, varRef);
+	find handlerVariable(cBlock, varRef);
+}
+
+pattern handlerVariable(cBlock : Handler, variable : Identifier) {
+	Handler.parameter(cBlock, param);
+	Identifier.refersTo(variable, param);
+}

@@ -1,0 +1,10 @@
+pattern catchProblemFinder_flattened(cBlock : Handler, insOf : InstanceOf){
+	Identifier(varRef);
+	Unary.operand(insOf, varRef);
+	cBlock = handlerVariable_cBlock;
+	varRef = handlerVariable_variable;
+	Handler(handlerVariable_cBlock);
+	Indentifier(handlerVariable_variable);
+	Handler.parameter(handlerVariable_cBlock, handlerVariable_param);
+	Identifier.refersTo(handlerVariable_variable, handlerVariable_param);
+}
